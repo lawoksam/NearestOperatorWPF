@@ -45,9 +45,18 @@ namespace NearestOperator
                 moveFocuss(e);
             }
         }
+        private void OnKeyDownHandler_search(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                search_Click(sender, e);
+                moveFocuss(e);
+            }
+        }
 
         private void parseNumberOfStations()
         {
+            if(number_textBox.Text != "how many stations do you want to find? (eg.3)")
             try
             {
                 numberOfStations = int.Parse(number_textBox.Text);
@@ -62,10 +71,12 @@ namespace NearestOperator
         private void search_Click(object sender, RoutedEventArgs e)
         {
             Lista.Items.Clear();
+            Lista2.Items.Clear();
             parseNumberOfStations();
             string address_ = $"{address_street.Text} {address_house_number.Text}, {address_city.Text}";
             positionCord p1 = GetPositionCord(address_);
-            //address_city.Text = $"{p1.Longitude.ToString().Replace(',','.')}, {p1.Latitude.ToString().Replace(',', '.')}";
+            Lista2.Items.Add($"{p1.Name}\n{p1.PostalCode}\n{p1.Locality}\n{p1.Region}\n{p1.Country}" +
+                $"\nLongitude: {p1.Longitude}\nLatitude: {p1.Latitude}");
             
 
 
@@ -103,10 +114,8 @@ namespace NearestOperator
             }
             catch (SqlException y)
             {
-                Console.WriteLine(y.ToString());
+                Lista.Items.Add(y.Message);
             }
-            Console.WriteLine("\nDone. Press enter.");
-            Console.ReadLine();
 
 
         }
@@ -145,8 +154,10 @@ namespace NearestOperator
         }
         private static positionCord createPositionCoordObject(string cordInfo)
         {
-            PositionFromApi cordInfoDeselialize = JsonConvert.DeserializeObject<PositionFromApi>(cordInfo);
-            positionCord coords = new positionCord(cordInfoDeselialize.data[0].Longitude,cordInfoDeselialize.data[0].Latitude);
+
+                PositionFromApi cordInfoDeselialize = JsonConvert.DeserializeObject<PositionFromApi>(cordInfo);
+                positionCord coords = new positionCord(cordInfoDeselialize.data[0].Longitude, cordInfoDeselialize.data[0].Latitude, cordInfoDeselialize.data[0].Name
+                    , cordInfoDeselialize.data[0].Postal_Code, cordInfoDeselialize.data[0].Region, cordInfoDeselialize.data[0].Locality, cordInfoDeselialize.data[0].Country);
             return coords;
         }
 

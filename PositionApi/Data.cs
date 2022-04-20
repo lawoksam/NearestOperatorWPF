@@ -7,7 +7,7 @@
         public string Type { get; set; }
         public string Name { get; set; }
         public string Number { get; set; }
-        public string PostalCode { get; set; }
+        public string Postal_Code { get; set; }
         public string Street { get; set; }
         public int Confidence { get; set; }
         public string Region { get; set; }
