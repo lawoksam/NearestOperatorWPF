@@ -68,7 +68,13 @@ namespace NearestOperator
             if(number_textBox.Text != "how many stations do you want to find? (eg.3)")
             try
             {
+
                 numberOfStations = int.Parse(number_textBox.Text);
+                    if (numberOfStations > 29000)
+                    {
+                        number_textBox.Text = "we have in Poland 29849 stations ;)";
+                        numberOfStations = 29849;
+                    }
             }
             catch (Exception)
             {
@@ -85,6 +91,11 @@ namespace NearestOperator
             parseNumberOfStations();
             string address_ = $"{address_street.Text} {address_house_number.Text}, {address_city.Text}";
             positionCord p1 = GetPositionCord(address_);
+            if(p1 == null)
+            {
+                Lista2.Items.Add("WRONG ADDRESS");
+                goto Found;
+            }
             Lista2.Items.Add($"{p1.Name}\n{p1.PostalCode}\n{p1.Locality}\n{p1.Region}\n{p1.Country}" +
                 $"\nLongitude: {p1.Longitude}\nLatitude: {p1.Latitude}");
             
@@ -128,7 +139,8 @@ namespace NearestOperator
             {
                 Lista.Items.Add(y.Message);
             }
-
+        Found:
+            ;
 
         }
         static string GetCoordFromAPI(string address_)
@@ -166,11 +178,15 @@ namespace NearestOperator
         }
         private static positionCord createPositionCoordObject(string cordInfo)
         {
-
+            try { 
                 PositionFromApi cordInfoDeselialize = JsonConvert.DeserializeObject<PositionFromApi>(cordInfo);
                 positionCord coords = new positionCord(cordInfoDeselialize.data[0].Longitude, cordInfoDeselialize.data[0].Latitude, cordInfoDeselialize.data[0].Name
                     , cordInfoDeselialize.data[0].Postal_Code, cordInfoDeselialize.data[0].Region, cordInfoDeselialize.data[0].Locality, cordInfoDeselialize.data[0].Country);
             return coords;
+            }catch (Exception e)
+            {
+                return null;
+            }
         }
 
 
