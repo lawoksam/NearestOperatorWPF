@@ -166,20 +166,20 @@ namespace NearestOperator
         }
 
 
-        private void address_city_TextChanged(object sender, TextChangedEventArgs e)
+        private void address_city_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
         }
-        private void address_street_TextChanged(object sender, TextChangedEventArgs e)
+        private void address_street_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
         }
 
-        private void address_house_TextChanged(object sender, TextChangedEventArgs e)
+        private void address_house_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
         }
 
         private void city_GotFocuss(object sender, RoutedEventArgs e)
         {
-            var txtControl = sender as TextBox;
+            var txtControl = sender as System.Windows.Controls.TextBox;
             txtControl.Dispatcher.BeginInvoke(new Action(() =>
             {
                 txtControl.SelectAll();
@@ -187,7 +187,7 @@ namespace NearestOperator
         }
         private void addres_GotFocuss(object sender, RoutedEventArgs e)
         {
-            var txtControl = sender as TextBox;
+            var txtControl = sender as System.Windows.Controls.TextBox;
             txtControl.Dispatcher.BeginInvoke(new Action(() =>
             {
                 txtControl.SelectAll();
@@ -195,7 +195,7 @@ namespace NearestOperator
         }
         private void address_house_GotFocuss(object sender, RoutedEventArgs e)
         {
-            var txtControl = sender as TextBox;
+            var txtControl = sender as System.Windows.Controls.TextBox;
             txtControl.Dispatcher.BeginInvoke(new Action(() =>
             {
                 txtControl.SelectAll();
@@ -203,7 +203,7 @@ namespace NearestOperator
         }
         private void number_textbox_GotFocuss(object sender, RoutedEventArgs e)
         {
-            var txtControl = sender as TextBox;
+            var txtControl = sender as System.Windows.Controls.TextBox;
             txtControl.Dispatcher.BeginInvoke(new Action(() =>
             {
                 txtControl.SelectAll();
@@ -215,7 +215,12 @@ namespace NearestOperator
             for (int i = 0; i < stations.Count; i++)
             {
                 if (Lista.SelectedItem.ToString().Contains(stations[i].Id))
+                { 
                     address_street.Text = stations[i].Id;
+                    wbMaps.Visibility = Visibility.Visible;
+                    wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}");
+                }
+                
             }
             
         }
