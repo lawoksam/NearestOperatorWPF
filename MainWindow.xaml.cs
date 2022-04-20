@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Input;
+using System.Collections.Generic;
 
 namespace NearestOperator
 {
@@ -67,11 +68,12 @@ namespace NearestOperator
             }
         }
 
-        string address_;
+        List<stationInfo> stations = new List<stationInfo>(); 
         private void search_Click(object sender, RoutedEventArgs e)
         {
             Lista.Items.Clear();
             Lista2.Items.Clear();
+            stations.Clear();
             parseNumberOfStations();
             string address_ = $"{address_street.Text} {address_house_number.Text}, {address_city.Text}";
             positionCord p1 = GetPositionCord(address_);
@@ -107,6 +109,8 @@ namespace NearestOperator
                                 //Console.WriteLine("{0} {1}", reader.GetString(0), reader.GetString(1));
                                 Lista.Items.Add($"{Lista.Items.Count+1}\t{reader.GetString(0)}\t{reader.GetString(1)}\t{reader.GetString(2)}" +
                                     $"\t{reader.GetString(3)}\n\tDistance: {Math.Round(reader.GetDouble(6))}m");
+                                stations.Add(new stationInfo(Lista.Items.Count + 1, reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
+                                    reader.GetDouble(4), reader.GetDouble(5), reader.GetDouble(6)));
                             }
                         }
                     }
@@ -205,6 +209,17 @@ namespace NearestOperator
                 txtControl.SelectAll();
             }));
         }
+        private void SelectedItem_Lista(object sender, RoutedEventArgs e)
+        {
+            Lista.Items.Add(Lista.SelectedItem);
+            for (int i = 0; i < stations.Count; i++)
+            {
+                if (Lista.SelectedItem.ToString().Contains(stations[i].Id))
+                    address_street.Text = stations[i].Id;
+            }
+            
+        }
         
+
     }
 }

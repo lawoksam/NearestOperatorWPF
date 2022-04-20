@@ -12,7 +12,7 @@
         <TextBox x:Name="address_city" HorizontalAlignment="Left" Margin="10,44,0,0" TextWrapping="Wrap" Text="city" VerticalAlignment="Top" Width="252" TextChanged="address_city_TextChanged" KeyDown="OnKeyDownHandler" GotFocus="city_GotFocuss"/>
         <TextBox x:Name="address_street" HorizontalAlignment="Left" Margin="10,67,0,0" TextWrapping="Wrap" Text="street" VerticalAlignment="Top" Width="252" TextChanged="address_street_TextChanged" KeyDown="OnKeyDownHandler" GotFocus="addres_GotFocuss"/>
         <TextBox x:Name="address_house_number" HorizontalAlignment="Left" Margin="10,90,0,0" TextWrapping="Wrap" Text="house number" VerticalAlignment="Top" Width="252" TextChanged="address_house_TextChanged" KeyDown="OnKeyDownHandler" GotFocus="address_house_GotFocuss"/>
-        <ListBox x:Name="Lista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="19,173,19,23"/>
+        <ListBox x:Name="Lista" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="19,173,19,23" MouseDoubleClick="SelectedItem_Lista"/>
         <TextBlock HorizontalAlignment="Left" Margin="10,23,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="109"><Run Text="Type your a"/><Run Language="pl-pl" Text="ddress"/></TextBlock>
         <TextBox x:Name="number_textBox" HorizontalAlignment="Left" Margin="10,113,0,0" TextWrapping="Wrap" Text="how many stations do you want to find? (eg.3)" VerticalAlignment="Top" Width="252" TextChanged="address_house_TextChanged" KeyDown="OnKeyDownHandler_number" GotFocus="number_textbox_GotFocuss"/>
         <ListBox x:Name="Lista2" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="383,10,19,266"/>
