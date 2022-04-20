@@ -54,6 +54,14 @@ namespace NearestOperator
                 moveFocuss(e);
             }
         }
+        private void OnKeyDownHandler_browser(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                wbMaps.Visibility = Visibility.Hidden;
+            }
+        }
+        
 
         private void parseNumberOfStations()
         {
@@ -98,7 +106,7 @@ namespace NearestOperator
 
                     connection.Open();
 
-                    String sql = $"select top {numberOfStations} * from znajdzNajblizszeStacje({p1.Longitude.ToString().Replace(',', '.')}, {p1.Latitude.ToString().Replace(',', '.')}) order by Odległość";
+                    String sql = $"select top {numberOfStations} * from znajdzNajblizszeStacje({p1.Longitude}, {p1.Latitude}) order by Odległość";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -110,7 +118,7 @@ namespace NearestOperator
                                 Lista.Items.Add($"{Lista.Items.Count+1}\t{reader.GetString(0)}\t{reader.GetString(1)}\t{reader.GetString(2)}" +
                                     $"\t{reader.GetString(3)}\n\tDistance: {Math.Round(reader.GetDouble(6))}m");
                                 stations.Add(new stationInfo(Lista.Items.Count + 1, reader.GetString(0), reader.GetString(1), reader.GetString(2), reader.GetString(3),
-                                    reader.GetDouble(4), reader.GetDouble(5), reader.GetDouble(6)));
+                                    reader.GetDouble(4).ToString().Replace(',', '.'), reader.GetDouble(5).ToString().Replace(',', '.'), reader.GetDouble(6)));
                             }
                         }
                     }
@@ -216,15 +224,13 @@ namespace NearestOperator
             {
                 if (Lista.SelectedItem.ToString().Contains(stations[i].Id))
                 { 
-                    address_street.Text = stations[i].Id;
                     wbMaps.Visibility = Visibility.Visible;
-                    wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}");
+                    wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" +
+                        $"&query_place_id={stations[0].Id}");
                 }
                 
             }
             
         }
-        
-
     }
 }

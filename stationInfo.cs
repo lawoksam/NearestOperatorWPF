@@ -13,11 +13,11 @@ namespace NearestOperator
         public string Network { get; set; }
         public string City { get; set; }
         public string Address { get; set; }
-        public double Longitude { get; set; }
-        public double Latitude { get; set; }
+        public string Longitude { get; set; }
+        public string Latitude { get; set; }
         public double Distance { get; set; }
 
-        public stationInfo(int number, string id, string network, string city, string address, double longitude, double latitude, double distance)
+        public stationInfo(int number, string id, string network, string city, string address, string longitude, string latitude, double distance)
         {
             Number = number;
             Id = id;
