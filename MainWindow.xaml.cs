@@ -209,7 +209,7 @@ namespace NearestOperator
             Lista.Items.Add(Lista.SelectedItem);
             for (int i = 0; i < stations.Count; i++)
             {
-                if (Lista.SelectedItem.ToString().Contains(stations[i].Id))
+                if (Lista.SelectedItem.ToString().Contains(stations[i].Id) && Lista.SelectedItem.ToString().Contains(stations[i].Address))
                 { 
                     wbMaps.Visibility = Visibility.Visible;
                     wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" +
