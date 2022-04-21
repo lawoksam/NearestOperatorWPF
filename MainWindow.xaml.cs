@@ -23,6 +23,11 @@ namespace NearestOperator
             InitializeComponent();
         }
         int numberOfStations = 3;
+
+
+        #region inputs
+
+
         private void moveFocuss(KeyEventArgs e)
         {
             var uie = e.OriginalSource as UIElement;
@@ -81,7 +86,9 @@ namespace NearestOperator
                 number_textBox.Text = "enter an integer";
             }
         }
+        #endregion
 
+        #region stationsQuery
         List<stationInfo> stations = new List<stationInfo>(); 
         private void search_Click(object sender, RoutedEventArgs e)
         {
@@ -112,11 +119,7 @@ namespace NearestOperator
 
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
                 {
-                    //Console.WriteLine("\nQuery data example:");
-                    //Console.WriteLine("=========================================\n");
-
                     connection.Open();
-
                     String sql = $"select top {numberOfStations} * from znajdzNajblizszeStacje({p1.Longitude}, {p1.Latitude}) order by Odległość";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -176,6 +179,7 @@ namespace NearestOperator
             else
                 return null;
         }
+        
         private static positionCord createPositionCoordObject(string cordInfo)
         {
             try { 
@@ -188,27 +192,9 @@ namespace NearestOperator
                 return null;
             }
         }
+        #endregion
 
-
-        private void address_city_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-        }
-        private void address_street_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-        }
-
-        private void address_house_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-        }
-
-        private void city_GotFocuss(object sender, RoutedEventArgs e)
-        {
-            var txtControl = sender as System.Windows.Controls.TextBox;
-            txtControl.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                txtControl.SelectAll();
-            }));
-        }
+        #region map
         private void addres_GotFocuss(object sender, RoutedEventArgs e)
         {
             var txtControl = sender as System.Windows.Controls.TextBox;
@@ -217,22 +203,7 @@ namespace NearestOperator
                 txtControl.SelectAll();
             }));
         }
-        private void address_house_GotFocuss(object sender, RoutedEventArgs e)
-        {
-            var txtControl = sender as System.Windows.Controls.TextBox;
-            txtControl.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                txtControl.SelectAll();
-            }));
-        }
-        private void number_textbox_GotFocuss(object sender, RoutedEventArgs e)
-        {
-            var txtControl = sender as System.Windows.Controls.TextBox;
-            txtControl.Dispatcher.BeginInvoke(new Action(() =>
-            {
-                txtControl.SelectAll();
-            }));
-        }
+        
         private void SelectedItem_Lista(object sender, RoutedEventArgs e)
         {
             Lista.Items.Add(Lista.SelectedItem);
@@ -243,10 +214,22 @@ namespace NearestOperator
                     wbMaps.Visibility = Visibility.Visible;
                     wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" +
                         $"&query_place_id={stations[0].Id}");
+                    break;
                 }
                 
             }
             
+        }
+        #endregion
+        private void address_city_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+        }
+        private void address_street_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+        }
+
+        private void address_house_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
         }
     }
 }
