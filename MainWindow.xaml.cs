@@ -113,8 +113,8 @@ namespace NearestOperator
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
 
                 builder.DataSource = "warszawka-serwer.database.windows.net";
-                builder.UserID = "sqlserver";
-                builder.Password = "Dupa1234";
+                builder.UserID = "MyLogin886";
+                builder.Password = "gxges3tQDgafg3SDA@tdsf!";
                 builder.InitialCatalog = "lte1800";
 
                 using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
