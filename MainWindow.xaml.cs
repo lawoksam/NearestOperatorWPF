@@ -10,6 +10,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Windows.Interop;
+using System.Diagnostics;
 
 namespace NearestOperator
 {
@@ -210,10 +212,12 @@ namespace NearestOperator
             for (int i = 0; i < stations.Count; i++)
             {
                 if (Lista.SelectedItem.ToString().Contains(stations[i].Id) && Lista.SelectedItem.ToString().Contains(stations[i].Address))
-                { 
+                {
+                    string url = $"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" + $"&query_place_id={stations[0].Id}";
                     wbMaps.Visibility = Visibility.Visible;
-                    wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" +
-                        $"&query_place_id={stations[0].Id}");
+                    Process.Start("explorer", $"\"{url}\"");
+                     //wbMaps.Navigate($"https://www.google.com/maps/search/?api=1&query={stations[i].Longitude}%2C{stations[i].Latitude}" +
+                     //   $"&query_place_id={stations[0].Id}");
                     break;
                 }
                 
